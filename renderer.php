@@ -43,6 +43,8 @@ class block_mmu_course_overview_renderer extends plugin_renderer_base {
         $config = get_config('block_mmu_course_overview');
 
         $html .= html_writer::start_tag('div', array('id' => 'course_list'));
+        $html .= html_writer::empty_tag('a', array('href' => '#previous_years_courses'));
+        $html .= html_writer::tag('h3', get_string('skip_to_previous_year_course','block_mmu_course_overview'));
         $courseordernumber = 0;
         $maxcourses = count($courses);
         // Intialize string/icon etc if user is editing.
@@ -156,6 +158,7 @@ class block_mmu_course_overview_renderer extends plugin_renderer_base {
 
         // PREVIOUS YEAR COURSES:
         $html .= html_writer::start_tag('div', array('id' => 'previous_year'));
+        $html .= html_writer::empty_tag('a', array('name'=>'previous_years_courses', 'id'=>'previous_years_courses'));
         $html .= html_writer::tag('h2', get_string('previous_year_courses_hdr', 'block_mmu_course_overview'));
         foreach ($previousyearcourses as $key => $course) {
             $html .= $this->output->box_start('coursebox', "course-{$course->id}");

@@ -197,11 +197,11 @@ function block_mmu_course_overview_get_sorted_courses() {
     $year = date('y', $time);
 
     if(date('n', $time) < $academicyearstart){
-        $currentacademicyear = ($year - 1).'/'.$year;
-        $previousacademicyear = ($year - 2).'/'.($year-1);
+        $currentacademicyear = ($year - 1).$year;
+        $previousacademicyear = ($year - 2).($year-1);
     }else{
-        $currentacademicyear = ($year).'/'.($year + 1);
-        $previousacademicyear = ($year-1).'/'.$year;
+        $currentacademicyear = ($year).($year + 1);
+        $previousacademicyear = ($year-1).$year;
     }
 
     // Academic year is last 4 characters of shortname, e.g. 1213
@@ -214,23 +214,22 @@ function block_mmu_course_overview_get_sorted_courses() {
     $orphanedcourses = array();
 
     // Retrieve all courses that a user is enrolled on
+    // alternate function is: enrol_get_users_courses($USER->id);
     $enrolled_courses = enrol_get_all_users_courses($USER->id);
+    /*
+     * TODO: The following logic need to be re-written to work dynamically every year.
+     */
 
     foreach($enrolled_courses as $course){
+        preg_match('_1011_',$course->shortname,$year10);
+        preg_match('_1112_',$course->shortname,$year11);
 
-       if((strlen($course->shortname) > 4) && (preg_match('/[0-9]{4}$/', $course->shortname, $academic_year))){
-            // Current year.
-            if (substr($academic_year[0], -4, 2).'/'.substr($academic_year[0], -2, 2) == $currentacademicyear){
-            $currentyearcourses[] = $course;
-            }
-            // Previous year.
-            if (substr($academic_year[0], -4, 2).'/'.substr($academic_year[0], -2, 2) == $previousacademicyear){
+        if(!empty($year10)|| !empty($year11)){
             $previousyearcourses[] = $course;
-             }
-       } else {
-            // Other courses.
-            $orphanedcourses[] = $course;
-       }
+        }else{
+            $currentyearcourses[] = $course;
+        }
+
     }
 
     return array($sortedcourses, $sitecourses, count($courses), $previousyearcourses, $currentyearcourses, $orphanedcourses);

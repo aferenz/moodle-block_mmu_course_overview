@@ -76,6 +76,7 @@ $string[ 'previous_year_courses_hdr' ]           = 'Previous Year\'s Courses';
 
 $string[ 'courseleaders' ]                        = 'Course Leaders: ';
 $string[ 'keycontacts' ]                          = 'Key Contacts';
+$string[ 'skip_to_previous_year_course']         = "Skip to previous years' courses";
 
 
 
