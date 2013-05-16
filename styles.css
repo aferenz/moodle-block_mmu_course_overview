@@ -129,4 +129,7 @@
     border-width: 2px;
     border-style: dashed;
 }
+#previous_years_courses:hover {
+    text-decoration: none;
+}
 
