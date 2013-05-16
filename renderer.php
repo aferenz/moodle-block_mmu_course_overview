@@ -123,7 +123,8 @@ class block_mmu_course_overview_renderer extends plugin_renderer_base {
             }
             $html .= $this->output->box('', 'flush');
             $html .= html_writer::end_tag('div');
-
+            /*
+             * Disabled on request by Emily
             // Adding course leaders.
             $context = get_context_instance(CONTEXT_COURSE, $course->id);
             // TODO retrieve 'editing teacher' role id instead of hard coding it
@@ -139,7 +140,7 @@ class block_mmu_course_overview_renderer extends plugin_renderer_base {
                 $html .= html_writer::tag('label', $htmlteachers);
                 $html .= html_writer::end_tag('div');
             }
-
+            */
             if (!empty($config->showchildren) && ($course->id > 0)) {
                 // List children here.
                 if ($children = block_mmu_course_overview_get_child_shortnames($course->id)) {
@@ -213,7 +214,8 @@ class block_mmu_course_overview_renderer extends plugin_renderer_base {
             }
             $html .= $this->output->box('', 'flush');
             $html .= html_writer::end_tag('div');
-
+            /*
+             * Disabled on request by Emily
             // Adding course leaders.
             $context = get_context_instance(CONTEXT_COURSE, $course->id);
             // TODO retrieve 'editing teacher' role id instead of hard coding it
@@ -229,6 +231,7 @@ class block_mmu_course_overview_renderer extends plugin_renderer_base {
                 $html .= html_writer::tag('label', $htmlteachers);
                 $html .= html_writer::end_tag('div');
             }
+            */
 
             if (!empty($config->showchildren) && ($course->id > 0)) {
                 // List children here.
