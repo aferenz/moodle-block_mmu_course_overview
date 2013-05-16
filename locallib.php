@@ -189,24 +189,7 @@ function block_mmu_course_overview_get_sorted_courses() {
             $sitecourses[$key] = $course;
         }
     }
-
-    // Get current and previous year.
-    $academicyearstart = intval(get_config('block_mmu_course_overview', 'academicyearstart'));
-
-    $time = time();
-    $year = date('y', $time);
-
-    if(date('n', $time) < $academicyearstart){
-        $currentacademicyear = ($year - 1).$year;
-        $previousacademicyear = ($year - 2).($year-1);
-    }else{
-        $currentacademicyear = ($year).($year + 1);
-        $previousacademicyear = ($year-1).$year;
-    }
-
-    // Academic year is last 4 characters of shortname, e.g. 1213
-    // Academic year must be previous or current.
-    $academic_year = '';
+       
 
     // Build arrays with current, previous year and orphaned courses.
     $currentyearcourses = array();
