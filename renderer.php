@@ -236,10 +236,12 @@ class block_mmu_course_overview_renderer extends plugin_renderer_base {
                     $html .= html_writer::tag('span', $children, array('class' => 'coursechildren'));
                 }
             }
-
+            /*
+             * commented by Abdul on request by Emily
             if (isset($overviews[$course->id])) {
                 $html .= $this->activity_display($course->id, $overviews[$course->id]);
             }
+            */
 
             $html .= $this->output->box('', 'flush');
             $html .= $this->output->box_end();
