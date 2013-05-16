@@ -43,8 +43,9 @@ class block_mmu_course_overview_renderer extends plugin_renderer_base {
         $config = get_config('block_mmu_course_overview');
 
         $html .= html_writer::start_tag('div', array('id' => 'course_list'));
-        $html .= html_writer::empty_tag('a', array('href' => '#previous_years_courses'));
+        $html .= html_writer::start_tag('a', array('href' => '#previous_years_courses'));
         $html .= html_writer::tag('h3', get_string('skip_to_previous_year_course','block_mmu_course_overview'));
+        $html .= html_writer::end_tag('a');
         $courseordernumber = 0;
         $maxcourses = count($courses);
         // Intialize string/icon etc if user is editing.
