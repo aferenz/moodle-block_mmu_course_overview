@@ -189,7 +189,6 @@ function block_mmu_course_overview_get_sorted_courses() {
             $sitecourses[$key] = $course;
         }
     }
-       
 
     // Build arrays with current, previous year and orphaned courses.
     $currentyearcourses = array();

@@ -41,6 +41,7 @@
     float: left;
     margin: 0 0 .5em 0;
     position: relative;
+    line-height: 1.2;
 }
 .dir-rtl .block_mmu_course_overview .content h2.title {
     float:right;
