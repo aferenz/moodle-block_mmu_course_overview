@@ -133,3 +133,23 @@
 #previous_years_courses:hover {
     text-decoration: none;
 }
+
+.block_mmu_course_overview .header { background: none repeat scroll 0 0 #000000 !important; }
+.block_mmu_course_overview .header h2 { color: #FFFFFF !important; }
+
+#course_list a h3 {
+    font-size: 1em;
+}
+
+#course_list a:hover h3 {
+    font-size: 1em; font-weight: bold;
+}
+
+#current_year h2, #previous_year h2 {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+h2.title {
+    font-size: 1.2em ! important;
+}
