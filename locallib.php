@@ -200,13 +200,7 @@ function block_mmu_course_overview_get_sorted_courses() {
     $year = date('y', $time);
 
     if(date('n', $time) < $academicyearstart){
-        $currentacademicyear = ($year - 1).$year;  // 12/13
-
-      /*  $previousacademicyear1 = ($year - 2).$year; // 11/12
-        $previousacademicyear2 = ($year - 3).$year; // 10/11
-        $previousacademicyear3 = ($year - 3).$year; // 09/10
-      */
-
+        $currentacademicyear = ($year - 1).$year;
     }else{
         $currentacademicyear = ($year).($year + 1);
     }
@@ -224,35 +218,34 @@ function block_mmu_course_overview_get_sorted_courses() {
      */
 
     foreach($enrolled_courses as $course){
-       // preg_match('_1011_',$course->shortname,$year10);
-       // preg_match('_1112_',$course->shortname,$year11);
-
-        //pregmatch for current year courses
-     //   preg_match($currentacademicyear, $course->shortname,$currentyear);
-        //pregmatch for courses without academic years that should appear within this year's courses. eg. 'Student Resource Area', etc.
+       // pregmatch for academic year at the end of course's shortname
         preg_match('/[0-9]{4}$/', $course->shortname, $academicyear);
-   /*     if(!empty($year10)|| !empty($year11)){
-            $previousyearcourses[] = $course;
-        }else{
-            $currentyearcourses[] = $course;
-        }*/
-        $currentyear ='';
+       // pregmatch for academic year between underscores
+        preg_match('/_{1}[0-9]{4}_{1}/', $course->shortname, $undercoreacademicyear);
 
-      if ($academicyear){
-       // Take 4 digits and check whether it is a valid academic years.
-       $firstyear = (substr($academicyear[0], -4, 2));
-       $secondyear = (substr($academicyear[0], -2, 2));
-        if ($secondyear - $firstyear != 1){
-            // academic year is invalid
+          $currentyear ='';
+
+      if ($academicyear || $undercoreacademicyear){
+          // Take 4 digits and check whether it is a valid academic years.
+          if ($academicyear){
+            $firstyear = (substr($academicyear[0], -4, 2));
+            $secondyear = (substr($academicyear[0], -2, 2));
+          }
+          if ($undercoreacademicyear){
+              $firstyear = (substr($undercoreacademicyear[0], -5, 2));
+              $secondyear = (substr($undercoreacademicyear[0], -3, 2));
+              $academicyear[0] = $firstyear.$secondyear;
+          }
+         // Check whether academic year is valid.
+          if ($secondyear - $firstyear != 1){
             $academicyear = '';
-
-            // check whether is is a current academic year
-        } elseif ($currentacademicyear == $academicyear[0]){
+         // Check whether it is a current academic year.
+          } elseif ($currentacademicyear == $academicyear[0]){
             $currentyear = $currentacademicyear;
-        }
+          }
       }
-        // If the course's shortname ends with the current academic year OR 4-digit suffix that is not a valid academic year,
-        // courses will be grouped under 'This Year's Courses'.
+        // If the course's shortname contains current academic year (between underscores or at the end) OR
+        // 4-digit suffix that is not a valid academic year, courses will be grouped under 'This Year's Courses'.
         if(!empty($currentyear) || !($academicyear)){
             $currentyearcourses[] = $course;
         }else{
