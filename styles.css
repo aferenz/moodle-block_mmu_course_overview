@@ -139,13 +139,17 @@
 
 #course_list a h3 {
     font-size: 1em;
+    display: inline-block;
 }
 
 #course_list a:hover h3 {
-    font-size: 1em; font-weight: bold;
+    font-size: 1em;
+    font-weight: bold;
+    text-decoration:underline;
+    display: inline-block;
 }
 
-#current_year h2, #previous_year h2 {
+#current_year h2, #previous_year h2, #next_year h2 {
     font-size: 1.5em;
     font-weight: bold;
 }

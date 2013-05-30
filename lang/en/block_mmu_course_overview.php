@@ -73,10 +73,14 @@ $string[ 'configacademicyearstart' ]            = 'Select the month correspondin
 
 $string[ 'current_year_courses_hdr' ]            = 'This Years\' Courses';
 $string[ 'previous_year_courses_hdr' ]           = 'Previous Years\' Courses';
+$string[ 'next_year_courses_hdr' ]               = 'Next Years\' Courses';
 
 $string[ 'courseleaders' ]                        = 'Course Leaders: ';
 $string[ 'keycontacts' ]                          = 'Key Contacts';
-$string[ 'skip_to_previous_year_course']          = 'Skip to Previous Years\' Courses';
+$string[ 'skip_to_previous_year_course']          = 'Skip to Previous Years\' Courses ';
+$string[ 'skip_to_next_year_course']              = 'Skip to Next Years\' Courses';
+$string[ 'separator']                             = ' | ';
+
 
 
 

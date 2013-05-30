@@ -205,17 +205,14 @@ function block_mmu_course_overview_get_sorted_courses() {
         $currentacademicyear = ($year).($year + 1);
     }
 
-    // Build arrays with current, previous year and orphaned courses.
+    // Build arrays with current, previous year and next year courses.
     $currentyearcourses = array();
     $previousyearcourses = array();
-    $orphanedcourses = array();
+    $nextyearcourses = array();
 
     // Retrieve all courses that a user is enrolled on
     // alternate function is: enrol_get_users_courses($USER->id);
     $enrolled_courses = enrol_get_all_users_courses($USER->id);
-    /*
-     * TODO: The following logic need to be re-written to work dynamically every year.
-     */
 
     foreach($enrolled_courses as $course){
        // pregmatch for academic year at the end of course's shortname
@@ -224,17 +221,20 @@ function block_mmu_course_overview_get_sorted_courses() {
         preg_match('/_{1}[0-9]{4}_{1}/', $course->shortname, $undercoreacademicyear);
 
           $currentyear ='';
+          $courseyear = '';
 
       if ($academicyear || $undercoreacademicyear){
           // Take 4 digits and check whether it is a valid academic years.
           if ($academicyear){
-            $firstyear = (substr($academicyear[0], -4, 2));
-            $secondyear = (substr($academicyear[0], -2, 2));
+              $firstyear = (substr($academicyear[0], -4, 2));
+              $secondyear = (substr($academicyear[0], -2, 2));
+              $courseyear = $firstyear.$secondyear;
           }
           if ($undercoreacademicyear){
               $firstyear = (substr($undercoreacademicyear[0], -5, 2));
               $secondyear = (substr($undercoreacademicyear[0], -3, 2));
               $academicyear[0] = $firstyear.$secondyear;
+              $courseyear = $firstyear.$secondyear;
           }
          // Check whether academic year is valid.
           if ($secondyear - $firstyear != 1){
@@ -249,10 +249,15 @@ function block_mmu_course_overview_get_sorted_courses() {
         if(!empty($currentyear) || !($academicyear)){
             $currentyearcourses[] = $course;
         }else{
-            $previousyearcourses[] = $course;
+        // Check whether valid academic year is 'previous' or 'next'.
+            if ($currentacademicyear  < $courseyear){
+                $nextyearcourses[] = $course;
+            }else {
+                $previousyearcourses[] = $course;
+            }
         }
     }
 
-    return array($sortedcourses, $sitecourses, count($courses), $previousyearcourses, $currentyearcourses, $orphanedcourses);
+    return array($sortedcourses, $sitecourses, count($courses), $previousyearcourses, $currentyearcourses, $nextyearcourses);
 }
 

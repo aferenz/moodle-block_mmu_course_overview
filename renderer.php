@@ -36,7 +36,7 @@ class block_mmu_course_overview_renderer extends plugin_renderer_base {
      * @param array $overviews list of course overviews
      * @return string html to be displayed in mmu_course_overview block
      */
-    public function mmu_course_overview($courses, $currentyearcourses, $previousyearcourses, $orphanedcourses, $overviews) {
+    public function mmu_course_overview($courses, $currentyearcourses, $previousyearcourses, $nextyearcourses, $overviews) {
         $html = '';
         $config = get_config('block_mmu_course_overview');
 
@@ -44,6 +44,14 @@ class block_mmu_course_overview_renderer extends plugin_renderer_base {
         $html .= html_writer::start_tag('a', array('href' => '#previous_years_courses'));
         $html .= html_writer::tag('h3', get_string('skip_to_previous_year_course','block_mmu_course_overview'));
         $html .= html_writer::end_tag('a');
+
+        if (!empty($nextyearcourses)) {
+        $html .= html_writer::tag('separator', get_string('separator','block_mmu_course_overview' ));
+        $html .= html_writer::start_tag('a', array('href' => '#next_years_courses'));
+        $html .= html_writer::tag('h3', get_string('skip_to_next_year_course','block_mmu_course_overview'));
+        $html .= html_writer::end_tag('a');
+        }
+
         $courseordernumber = 0;
         $maxcourses = count($courses);
         // Intialize string/icon etc if user is editing.
@@ -157,6 +165,102 @@ class block_mmu_course_overview_renderer extends plugin_renderer_base {
             $courseordernumber++;
         }
         $html .= html_writer::end_tag('div');
+
+        // NEXT YEAR COURSES:
+        if (!empty($nextyearcourses)) {
+            $html .= html_writer::start_tag('div', array('id' => 'next_year'));
+            $html .= html_writer::start_tag('a', array('name'=>'next_years_courses', 'id'=>'next_years_courses'));
+            $html .= html_writer::end_tag('a');
+            $html .= html_writer::tag('h2', get_string('next_year_courses_hdr', 'block_mmu_course_overview'));
+            foreach ($nextyearcourses as $key => $course) {
+                $html .= $this->output->box_start('coursebox', "course-{$course->id}");
+                $html .= html_writer::start_tag('div', array('class' => 'course_title'));
+                // Ajax enabled then add moveicon html
+                if (!is_null($moveicon)) {
+                    $html .= $moveicon;
+                } else if (!is_null($url)) {
+                    // Add course id to move link
+                    $url->param('source', $course->id);
+                    $html .= html_writer::start_tag('div', array('class' => 'moveicons'));
+                    // Add an arrow to move course up.
+                    if ($courseordernumber > 0) {
+                        $url->param('move', -1);
+                        $html .= html_writer::link($url,
+                            html_writer::empty_tag('img', array('src' => $moveup['icon'],
+                                'class' => 'up', 'alt' => $moveup['str'])),
+                            array('title' => $moveup['str'], 'class' => 'moveup'));
+                    } else {
+                        // Add a spacer to keep keep down arrow icons at right position.
+                        $html .= html_writer::empty_tag('img', array('src' => $this->pix_url('spacer'),
+                            'class' => 'movedownspacer'));
+                    }
+                    // Add an arrow to move course down.
+                    if ($courseordernumber <= $maxcourses-2) {
+                        $url->param('move', 1);
+                        $html .= html_writer::link($url, html_writer::empty_tag('img',
+                                array('src' => $movedown['icon'], 'class' => 'down', 'alt' => $movedown['str'])),
+                            array('title' => $movedown['str'], 'class' => 'movedown'));
+                    } else {
+                        // Add a spacer to keep keep up arrow icons at right position.
+                        $html .= html_writer::empty_tag('img', array('src' => $this->pix_url('spacer'),
+                            'class' => 'moveupspacer'));
+                    }
+                    $html .= html_writer::end_tag('div');
+                }
+
+                $attributes = array('title' => s($course->fullname));
+                if ($course->id > 0) {
+                    $courseurl = new moodle_url('/course/view.php', array('id' => $course->id));
+                    $coursefullname = format_string($course->fullname, true, $course->id);
+                    $link = html_writer::link($courseurl, $coursefullname, $attributes);
+                    $html .= $this->output->heading($link, 2, 'title');
+                } else {
+                    $html .= $this->output->heading(html_writer::link(
+                        new moodle_url('/auth/mnet/jump.php', array('hostid' => $course->hostid, 'wantsurl' => '/course/view.php?id='.$course->remoteid)),
+                        format_string($course->shortname, true), $attributes) . ' (' . format_string($course->hostname) . ')', 2, 'title');
+                }
+                $html .= $this->output->box('', 'flush');
+                $html .= html_writer::end_tag('div');
+                /*
+                 * Disabled on request by Emily
+                // Adding course leaders.
+                $context = get_context_instance(CONTEXT_COURSE, $course->id);
+                // TODO retrieve 'editing teacher' role id instead of hard coding it
+                $teachers = get_role_users(3, $context);
+                if ($teachers){
+                    $html .= html_writer::start_tag('div', array('id'=>'courseleaders'));
+                    $teacherslabel = html_writer::tag('div',get_string('keycontacts','block_mmu_course_overview'), array('id'=>'keycontacts'));
+                    $teacherslabel .= get_string('courseleaders','block_mmu_course_overview');
+                    foreach($teachers as $teacher){
+                        $teacherslabel .= $teacher->firstname. ' '.$teacher->lastname.', ';
+                    }
+                    $htmlteachers = rtrim($teacherslabel, ", ");
+                    $html .= html_writer::tag('label', $htmlteachers);
+                    $html .= html_writer::end_tag('div');
+                }
+                */
+
+                if (!empty($config->showchildren) && ($course->id > 0)) {
+                    // List children here.
+                    if ($children = block_mmu_course_overview_get_child_shortnames($course->id)) {
+                        $html .= html_writer::tag('span', $children, array('class' => 'coursechildren'));
+                    }
+                }
+                /*
+                 * commented by Abdul on request by Emily
+                if (isset($overviews[$course->id])) {
+                    $html .= $this->activity_display($course->id, $overviews[$course->id]);
+                }
+                */
+
+                $html .= $this->output->box('', 'flush');
+                $html .= $this->output->box_end();
+                $courseordernumber++;
+            }
+
+            $html .= html_writer::end_tag('div');
+        }
+
 
         // PREVIOUS YEAR COURSES:
         $html .= html_writer::start_tag('div', array('id' => 'previous_year'));
