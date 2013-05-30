@@ -18,14 +18,12 @@
  * mmu_course_overview block rendrer
  *
  * @package    block_mmu_course_overview
- * @copyright  2012 Adam Olley <adam.olley@netspot.com.au>
+ * @copyright  2013 University of London Computer Centre
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 defined('MOODLE_INTERNAL') || die;
 
 /**
- * mmu_course_overview block rendrer
- *
  * @copyright  2012 Adam Olley <adam.olley@netspot.com.au>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -252,77 +250,6 @@ class block_mmu_course_overview_renderer extends plugin_renderer_base {
         }
         $html .= html_writer::end_tag('div');
 
-
-
-
-        // THE ORIGINAL LIST...
-     /*   foreach ($courses as $key => $course) {
-            $html .= $this->output->box_start('coursebox', "course-{$course->id}");
-            $html .= html_writer::start_tag('div', array('class' => 'course_title'));
-            // Ajax enabled then add moveicon html
-            if (!is_null($moveicon)) {
-                $html .= $moveicon;
-            } else if (!is_null($url)) {
-                // Add course id to move link
-                $url->param('source', $course->id);
-                $html .= html_writer::start_tag('div', array('class' => 'moveicons'));
-                // Add an arrow to move course up.
-                if ($courseordernumber > 0) {
-                    $url->param('move', -1);
-                    $html .= html_writer::link($url,
-                    html_writer::empty_tag('img', array('src' => $moveup['icon'],
-                        'class' => 'up', 'alt' => $moveup['str'])),
-                        array('title' => $moveup['str'], 'class' => 'moveup'));
-                } else {
-                    // Add a spacer to keep keep down arrow icons at right position.
-                    $html .= html_writer::empty_tag('img', array('src' => $this->pix_url('spacer'),
-                        'class' => 'movedownspacer'));
-                }
-                // Add an arrow to move course down.
-                if ($courseordernumber <= $maxcourses-2) {
-                    $url->param('move', 1);
-                    $html .= html_writer::link($url, html_writer::empty_tag('img',
-                        array('src' => $movedown['icon'], 'class' => 'down', 'alt' => $movedown['str'])),
-                        array('title' => $movedown['str'], 'class' => 'movedown'));
-                } else {
-                    // Add a spacer to keep keep up arrow icons at right position.
-                    $html .= html_writer::empty_tag('img', array('src' => $this->pix_url('spacer'),
-                        'class' => 'moveupspacer'));
-                }
-                $html .= html_writer::end_tag('div');
-            }
-
-            $attributes = array('title' => s($course->fullname));
-            if ($course->id > 0) {
-                $courseurl = new moodle_url('/course/view.php', array('id' => $course->id));
-                $coursefullname = format_string($course->fullname, true, $course->id);
-                $link = html_writer::link($courseurl, $coursefullname, $attributes);
-                $html .= $this->output->heading($link, 2, 'title');
-            } else {
-                $html .= $this->output->heading(html_writer::link(
-                    new moodle_url('/auth/mnet/jump.php', array('hostid' => $course->hostid, 'wantsurl' => '/course/view.php?id='.$course->remoteid)),
-                    format_string($course->shortname, true), $attributes) . ' (' . format_string($course->hostname) . ')', 2, 'title');
-            }
-            $html .= $this->output->box('', 'flush');
-            $html .= html_writer::end_tag('div');
-
-            if (!empty($config->showchildren) && ($course->id > 0)) {
-                // List children here.
-                if ($children = block_mmu_course_overview_get_child_shortnames($course->id)) {
-                    $html .= html_writer::tag('span', $children, array('class' => 'coursechildren'));
-                }
-            }
-
-            if (isset($overviews[$course->id])) {
-                $html .= $this->activity_display($course->id, $overviews[$course->id]);
-            }
-
-            $html .= $this->output->box('', 'flush');
-            $html .= $this->output->box_end();
-            $courseordernumber++;
-        }
-        $html .= html_writer::end_tag('div');
-*/
         return $html;
     }
 
@@ -377,22 +304,6 @@ class block_mmu_course_overview_renderer extends plugin_renderer_base {
         return $output;
     }
 
-    /**
-     * Show hidden courses count
-     *
-     * @param int $total count of hidden courses
-     * @return string html
-     */
-  /*  public function hidden_courses($total) {
-        if ($total <= 0) {
-            return;
-        }
-        $output = $this->output->box_start('notice');
-        $plural = $total > 1 ? 'plural' : '';
-        $output .= get_string('hiddencoursecount'.$plural, 'block_mmu_course_overview', $total);
-        $output .= $this->output->box_end();
-        return $output;
-    }*/
 
     /**
      * Creates collapsable region

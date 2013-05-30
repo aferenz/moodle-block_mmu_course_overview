@@ -18,7 +18,7 @@
  * mmu_course_overview block settings
  *
  * @package    block_mmu_course_overview
- * @copyright  2012 Adam Olley <adam.olley@netspot.com.au>
+ * @copyright  2013 University of London Computer Centre
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 defined('MOODLE_INTERNAL') || die;
