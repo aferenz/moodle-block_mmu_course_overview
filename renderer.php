@@ -129,36 +129,14 @@ class block_mmu_course_overview_renderer extends plugin_renderer_base {
             }
             $html .= $this->output->box('', 'flush');
             $html .= html_writer::end_tag('div');
-            /*
-             * Disabled on request by Emily
-            // Adding course leaders.
-            $context = get_context_instance(CONTEXT_COURSE, $course->id);
-            // TODO retrieve 'editing teacher' role id instead of hard coding it
-            $teachers = get_role_users(3, $context);
-            if ($teachers){
-                $html .= html_writer::start_tag('div', array('id'=>'courseleaders'));
-                $teacherslabel = html_writer::tag('div',get_string('keycontacts','block_mmu_course_overview'), array('id'=>'keycontacts'));
-                $teacherslabel .= get_string('courseleaders','block_mmu_course_overview');
-                foreach($teachers as $teacher){
-                $teacherslabel .= $teacher->firstname. ' '.$teacher->lastname.', ';
-                }
-                $htmlteachers = rtrim($teacherslabel, ", ");
-                $html .= html_writer::tag('label', $htmlteachers);
-                $html .= html_writer::end_tag('div');
-            }
-            */
+
             if (!empty($config->showchildren) && ($course->id > 0)) {
                 // List children here.
                 if ($children = block_mmu_course_overview_get_child_shortnames($course->id)) {
                     $html .= html_writer::tag('span', $children, array('class' => 'coursechildren'));
                 }
             }
-            /*
-             * commented by Abdul on request by Emily
-            if (isset($overviews[$course->id])) {
-                $html .= $this->activity_display($course->id, $overviews[$course->id]);
-            }
-            */
+
 
             $html .= $this->output->box('', 'flush');
             $html .= $this->output->box_end();
@@ -221,24 +199,7 @@ class block_mmu_course_overview_renderer extends plugin_renderer_base {
                 }
                 $html .= $this->output->box('', 'flush');
                 $html .= html_writer::end_tag('div');
-                /*
-                 * Disabled on request by Emily
-                // Adding course leaders.
-                $context = get_context_instance(CONTEXT_COURSE, $course->id);
-                // TODO retrieve 'editing teacher' role id instead of hard coding it
-                $teachers = get_role_users(3, $context);
-                if ($teachers){
-                    $html .= html_writer::start_tag('div', array('id'=>'courseleaders'));
-                    $teacherslabel = html_writer::tag('div',get_string('keycontacts','block_mmu_course_overview'), array('id'=>'keycontacts'));
-                    $teacherslabel .= get_string('courseleaders','block_mmu_course_overview');
-                    foreach($teachers as $teacher){
-                        $teacherslabel .= $teacher->firstname. ' '.$teacher->lastname.', ';
-                    }
-                    $htmlteachers = rtrim($teacherslabel, ", ");
-                    $html .= html_writer::tag('label', $htmlteachers);
-                    $html .= html_writer::end_tag('div');
-                }
-                */
+
 
                 if (!empty($config->showchildren) && ($course->id > 0)) {
                     // List children here.
@@ -246,12 +207,7 @@ class block_mmu_course_overview_renderer extends plugin_renderer_base {
                         $html .= html_writer::tag('span', $children, array('class' => 'coursechildren'));
                     }
                 }
-                /*
-                 * commented by Abdul on request by Emily
-                if (isset($overviews[$course->id])) {
-                    $html .= $this->activity_display($course->id, $overviews[$course->id]);
-                }
-                */
+
 
                 $html .= $this->output->box('', 'flush');
                 $html .= $this->output->box_end();
@@ -316,24 +272,6 @@ class block_mmu_course_overview_renderer extends plugin_renderer_base {
             }
             $html .= $this->output->box('', 'flush');
             $html .= html_writer::end_tag('div');
-            /*
-             * Disabled on request by Emily
-            // Adding course leaders.
-            $context = get_context_instance(CONTEXT_COURSE, $course->id);
-            // TODO retrieve 'editing teacher' role id instead of hard coding it
-            $teachers = get_role_users(3, $context);
-            if ($teachers){
-                $html .= html_writer::start_tag('div', array('id'=>'courseleaders'));
-                $teacherslabel = html_writer::tag('div',get_string('keycontacts','block_mmu_course_overview'), array('id'=>'keycontacts'));
-                $teacherslabel .= get_string('courseleaders','block_mmu_course_overview');
-                foreach($teachers as $teacher){
-                    $teacherslabel .= $teacher->firstname. ' '.$teacher->lastname.', ';
-                }
-                $htmlteachers = rtrim($teacherslabel, ", ");
-                $html .= html_writer::tag('label', $htmlteachers);
-                $html .= html_writer::end_tag('div');
-            }
-            */
 
             if (!empty($config->showchildren) && ($course->id > 0)) {
                 // List children here.
@@ -341,12 +279,7 @@ class block_mmu_course_overview_renderer extends plugin_renderer_base {
                     $html .= html_writer::tag('span', $children, array('class' => 'coursechildren'));
                 }
             }
-            /*
-             * commented by Abdul on request by Emily
-            if (isset($overviews[$course->id])) {
-                $html .= $this->activity_display($course->id, $overviews[$course->id]);
-            }
-            */
+
 
             $html .= $this->output->box('', 'flush');
             $html .= $this->output->box_end();
