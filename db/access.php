@@ -34,5 +34,15 @@ $capabilities = array(
         ),
 
         'clonepermissionsfrom' => 'moodle/my:manageblocks'
-    )
+    ),
+
+    'block/mmu_course_overview:addinstance' => array(
+        'riskbitmask' => RISK_PERSONAL | RISK_CONFIG,
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_SYSTEM,
+        'archetypes' => array(
+            'editingteacher' => CAP_ALLOW,
+            'manager' => CAP_ALLOW
+        )
+    ),
 );
