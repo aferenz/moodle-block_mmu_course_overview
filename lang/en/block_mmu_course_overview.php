@@ -71,12 +71,16 @@ $string[ 'december' ]                           = 'December';
 $string[ 'academicyearstart' ]                  = 'Start of academic year';
 $string[ 'configacademicyearstart' ]            = 'Select the month corresponding to the start of the academic year. This setting dictates how current and previous year\'s courses are grouped for display.';
 
-$string[ 'current_year_courses_hdr' ]            = 'This Year\'s Courses';
-$string[ 'previous_year_courses_hdr' ]           = 'Previous Year\'s Courses';
+$string[ 'current_year_courses_hdr' ]            = 'This Years\' Courses';
+$string[ 'previous_year_courses_hdr' ]           = 'Previous Years\' Courses';
+$string[ 'next_year_courses_hdr' ]               = 'Next Years\' Courses';
 
 $string[ 'courseleaders' ]                        = 'Course Leaders: ';
 $string[ 'keycontacts' ]                          = 'Key Contacts';
-$string[ 'skip_to_previous_year_course']         = "Skip to previous years' courses";
+$string[ 'skip_to_previous_year_course']          = 'Skip to Previous Years\' Courses ';
+$string[ 'skip_to_next_year_course']              = 'Skip to Next Years\' Courses';
+$string[ 'separator']                             = ' | ';
+
 
 
 
