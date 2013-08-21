@@ -59,7 +59,8 @@ class block_mmu_course_overview_renderer extends plugin_renderer_base {
         $moveicon = null;
         $moveup[] = null;
         $movedown[] = null;
-        if ($this->page->user_is_editing()) {
+        // move ability commented out
+       /* if ($this->page->user_is_editing()) {
             if (ajaxenabled()) {
                 $moveicon = html_writer::tag('div',
                     html_writer::empty_tag('img',
@@ -75,7 +76,7 @@ class block_mmu_course_overview_renderer extends plugin_renderer_base {
                 $movedown['str'] =  get_string('movedown');
                 $movedown['icon'] = $this->pix_url('t/down');
             }
-        }
+        } */
 
         // CURRENT YEAR COURSES:
         $html .= html_writer::start_tag('div', array('id' => 'current_year'));
